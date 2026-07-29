@@ -1,0 +1,54 @@
+{
+  "policyVersion": "1.0",
+  "systemId": "customer-ai",
+  "maximumFallbackHops": 3,
+  "minimumProviderDiversity": 3,
+  "minimumRegionDiversity": 3,
+  "requireAllScenariosPass": true,
+  "scenarios": [
+    {
+      "id": "steady-state",
+      "description": "All inference routes are available.",
+      "unavailableRouteIds": [],
+      "unavailableProviders": [],
+      "unavailableRegions": []
+    },
+    {
+      "id": "primary-model-outage",
+      "description": "The primary model endpoint is unavailable.",
+      "unavailableRouteIds": [
+        "atlas-primary"
+      ],
+      "unavailableProviders": [],
+      "unavailableRegions": []
+    },
+    {
+      "id": "primary-provider-outage",
+      "description": "The primary cloud provider is unavailable.",
+      "unavailableRouteIds": [],
+      "unavailableProviders": [
+        "cloud-a"
+      ],
+      "unavailableRegions": []
+    },
+    {
+      "id": "east-region-outage",
+      "description": "The primary region is unavailable.",
+      "unavailableRouteIds": [],
+      "unavailableProviders": [],
+      "unavailableRegions": [
+        "us-east"
+      ]
+    },
+    {
+      "id": "dual-cloud-outage",
+      "description": "Both external cloud providers are unavailable.",
+      "unavailableRouteIds": [],
+      "unavailableProviders": [
+        "cloud-a",
+        "cloud-b"
+      ],
+      "unavailableRegions": []
+    }
+  ]
+}

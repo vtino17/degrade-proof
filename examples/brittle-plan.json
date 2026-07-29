@@ -1,0 +1,169 @@
+{
+  "planVersion": "1.0",
+  "systemId": "customer-ai",
+  "routes": [
+    {
+      "id": "atlas-primary",
+      "provider": "cloud-a",
+      "model": "atlas-pro",
+      "region": "us-east",
+      "residency": "US",
+      "capabilities": [
+        "chat",
+        "json",
+        "tools",
+        "vision"
+      ],
+      "acceptedDataClasses": [
+        "public",
+        "internal",
+        "confidential",
+        "restricted"
+      ],
+      "contextWindow": 128000,
+      "qualityScore": 96,
+      "p95LatencyMs": 900,
+      "costPer1kTokens": 0.03,
+      "retainsInput": false,
+      "preservesConversationState": true,
+      "fallbackIds": [
+        "external-cheap",
+        "missing-route"
+      ]
+    },
+    {
+      "id": "external-cheap",
+      "provider": "cloud-b",
+      "model": "economy-chat",
+      "region": "eu-west",
+      "residency": "EU",
+      "capabilities": [
+        "chat"
+      ],
+      "acceptedDataClasses": [
+        "public",
+        "internal"
+      ],
+      "contextWindow": 16000,
+      "qualityScore": 68,
+      "p95LatencyMs": 4500,
+      "costPer1kTokens": 0.08,
+      "retainsInput": true,
+      "preservesConversationState": false,
+      "fallbackIds": []
+    },
+    {
+      "id": "local-fragile",
+      "provider": "cloud-a",
+      "model": "small-local",
+      "region": "us-east",
+      "residency": "US",
+      "capabilities": [
+        "chat"
+      ],
+      "acceptedDataClasses": [
+        "public"
+      ],
+      "contextWindow": 8000,
+      "qualityScore": 55,
+      "p95LatencyMs": 3500,
+      "costPer1kTokens": 0.01,
+      "retainsInput": false,
+      "preservesConversationState": false,
+      "fallbackIds": []
+    },
+    {
+      "id": "cycle-a",
+      "provider": "lab-a",
+      "model": "cycle-a",
+      "region": "lab-east",
+      "residency": "US",
+      "capabilities": [
+        "chat"
+      ],
+      "acceptedDataClasses": [
+        "public"
+      ],
+      "contextWindow": 8000,
+      "qualityScore": 50,
+      "p95LatencyMs": 5000,
+      "costPer1kTokens": 0.01,
+      "retainsInput": false,
+      "preservesConversationState": false,
+      "fallbackIds": [
+        "cycle-b"
+      ]
+    },
+    {
+      "id": "cycle-b",
+      "provider": "lab-b",
+      "model": "cycle-b",
+      "region": "lab-west",
+      "residency": "US",
+      "capabilities": [
+        "chat"
+      ],
+      "acceptedDataClasses": [
+        "public"
+      ],
+      "contextWindow": 8000,
+      "qualityScore": 50,
+      "p95LatencyMs": 5000,
+      "costPer1kTokens": 0.01,
+      "retainsInput": false,
+      "preservesConversationState": false,
+      "fallbackIds": [
+        "cycle-a"
+      ]
+    }
+  ],
+  "workloads": [
+    {
+      "id": "support-assistant",
+      "primaryRouteId": "atlas-primary",
+      "dataClass": "confidential",
+      "requiredCapabilities": [
+        "chat",
+        "json"
+      ],
+      "allowedResidencies": [
+        "US"
+      ],
+      "allowedProviders": [
+        "cloud-a",
+        "cloud-b",
+        "self-hosted"
+      ],
+      "minimumContextWindow": 64000,
+      "minimumQualityScore": 80,
+      "maximumP95LatencyMs": 2500,
+      "maximumCostPer1kTokens": 0.04,
+      "allowInputRetention": false,
+      "requireConversationState": true
+    },
+    {
+      "id": "automation-agent",
+      "primaryRouteId": "atlas-primary",
+      "dataClass": "restricted",
+      "requiredCapabilities": [
+        "chat",
+        "json",
+        "tools"
+      ],
+      "allowedResidencies": [
+        "US"
+      ],
+      "allowedProviders": [
+        "cloud-a",
+        "cloud-b",
+        "self-hosted"
+      ],
+      "minimumContextWindow": 64000,
+      "minimumQualityScore": 82,
+      "maximumP95LatencyMs": 2800,
+      "maximumCostPer1kTokens": 0.05,
+      "allowInputRetention": false,
+      "requireConversationState": true
+    }
+  ]
+}

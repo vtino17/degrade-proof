@@ -1,0 +1,9 @@
+{
+  "name": "@degradeproof/studio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": { "@degradeproof/core": "workspace:*" },
+  "devDependencies": { "vite": "^7.3.6" },
+  "scripts": { "dev": "vite", "build": "vite build" }
+}

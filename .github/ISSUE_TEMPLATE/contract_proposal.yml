@@ -1,0 +1,25 @@
+name: Contract proposal
+description: Propose a new graceful-degradation invariant.
+title: "[Contract]: "
+labels: ["enhancement", "contract"]
+body:
+  - type: textarea
+    id: failure
+    attributes:
+      label: Hidden degradation
+      description: Which unsafe fallback can DegradeProof not currently detect?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Link primary research or include sanitized examples.
+    validations:
+      required: true
+  - type: textarea
+    id: rule
+    attributes:
+      label: Proposed deterministic invariant
+    validations:
+      required: true

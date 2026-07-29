@@ -1,0 +1,9 @@
+{
+  "name": "@degradeproof/cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": { "degrade-proof": "./dist/index.js" },
+  "dependencies": { "@degradeproof/core": "workspace:*" },
+  "scripts": { "build": "tsc -p tsconfig.build.json" }
+}

@@ -31,8 +31,12 @@ export function assertPlan(value: unknown): asserts value is FailoverPlan {
     for (const field of [
       "contextWindow", "qualityScore", "p95LatencyMs", "costPer1kTokens",
     ]) {
-      if (typeof route[field] !== "number" || Number(route[field]) < 0) {
-        throw new Error(`${field} must be non-negative.`);
+      if (
+        typeof route[field] !== "number"
+        || !Number.isFinite(route[field])
+        || Number(route[field]) < 0
+      ) {
+        throw new Error(`${field} must be finite and non-negative.`);
       }
     }
     if (Number(route.qualityScore) > 100) throw new Error("qualityScore cannot exceed 100.");
@@ -58,8 +62,12 @@ export function assertPlan(value: unknown): asserts value is FailoverPlan {
       "minimumContextWindow", "minimumQualityScore",
       "maximumP95LatencyMs", "maximumCostPer1kTokens",
     ]) {
-      if (typeof workload[field] !== "number" || Number(workload[field]) < 0) {
-        throw new Error(`${field} must be non-negative.`);
+      if (
+        typeof workload[field] !== "number"
+        || !Number.isFinite(workload[field])
+        || Number(workload[field]) < 0
+      ) {
+        throw new Error(`${field} must be finite and non-negative.`);
       }
     }
     for (const field of ["allowInputRetention", "requireConversationState"]) {

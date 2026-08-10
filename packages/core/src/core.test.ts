@@ -116,6 +116,22 @@ describe("degradation compiler", () => {
     plan.routes[0]!.qualityScore = 101;
     await expect(compile(plan)).rejects.toThrow("cannot exceed");
   });
+  it.each([Number.NaN, Number.POSITIVE_INFINITY])(
+    "rejects non-finite route metrics (%s)",
+    async (costPer1kTokens) => {
+      const plan = mutable();
+      plan.routes[0]!.costPer1kTokens = costPer1kTokens;
+      await expect(compile(plan)).rejects.toThrow("costPer1kTokens must be finite");
+    },
+  );
+  it.each([Number.NaN, Number.POSITIVE_INFINITY])(
+    "rejects non-finite workload budgets (%s)",
+    async (maximumCostPer1kTokens) => {
+      const plan = mutable();
+      plan.workloads[0]!.maximumCostPer1kTokens = maximumCostPer1kTokens;
+      await expect(compile(plan)).rejects.toThrow("maximumCostPer1kTokens must be finite");
+    },
+  );
 });
 
 describe("degradation receipts", () => {
